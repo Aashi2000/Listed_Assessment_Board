@@ -11,7 +11,7 @@ function Help() {
 
       <div className='p-4 flex-1'>
         <div className='flex justify-between items-center flex-wrap md:flex-nowrap p-4'>
-          <p className='text-[24px] font-[700] mb-2 md:mb-0 md:mr-4'>Help</p>
+          <p className='text-[24px] font-[700] mb-2 md:mb-0 md:mr-4'>Help Page</p>
           <div className='flex items-center'>
             <SearchBar />
             <div className='mx-4'>
