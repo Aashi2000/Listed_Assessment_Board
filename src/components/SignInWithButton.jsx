@@ -1,20 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AppleIcon from '../assets/IconsSVG/AppleIcon'
 import GoogleIcon from '../assets/IconsSVG/GoogleIcon'
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { Link } from 'react-router-dom'
 
 const SignInWithButton = ({ comp }) => {
+    const [googleSignInSuccess, setGoogleSignInSuccess] = useState(false)
+    const auth = getAuth();
+
+    const handleSignInWithGoogle = async () => {
+        const provider = new GoogleAuthProvider()
+
+        try{ 
+            const result = await signInWithPopup(auth, provider)
+            console.log("Signin with google successfully...!",result)
+            setGoogleSignInSuccess(true)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    
+    function handleSignInWithApple() {
+        return null;
+    }
+
+
     return (
-        <div className='flex bg-white rounded-lg px-3 py-1 my-3 items-center'>
-            <div className='mr-2'>
-                {comp === 'Google' ? (
-                    <GoogleIcon className="my-4" />
-                    // <image src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" className='w-10 h-10'/>
-                ) : (
-                    <AppleIcon className="my-4" />
-                )}
+        <Link to={googleSignInSuccess? '/dashboard' : '/'}>
+            <div className='flex bg-white rounded-lg px-3 py-1 my-3 items-center' onClick={comp === 'Google' ? handleSignInWithGoogle : handleSignInWithApple}>
+                <div className='mr-2'>
+                    {comp === 'Google' ? (
+                        <GoogleIcon className="my-4" />
+                    ) : (
+                        <AppleIcon className="my-4" />
+                    )}
+                </div>
+                <p> Sign in with {comp} </p>
             </div>
-            <p> Sign in with {comp} </p>
-        </div>
+        </Link>
+
     )
 }
 
